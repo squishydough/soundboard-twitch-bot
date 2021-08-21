@@ -61,6 +61,9 @@ const soundLibrary = new SoundLibrary({
    * Multiple file example:
    * !command = ['sound1.mp3', 'sound2.mp3']
    *
+   * Random file from category example (requires additional code after this config)::
+   * !command = ''
+   *
    */
   streamElementsRewards: {
     '!angel': `yeah that's what you get [i killed].mp3`,
