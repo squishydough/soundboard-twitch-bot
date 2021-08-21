@@ -54,7 +54,7 @@ on what you should be updating.
 
 1. Under the *Audio* category on the left, expand **Output Modules** and select **WaveOut**.
 
-1. Under the *Select Audio Device* dropdown box, look for *CABLE Output*, or whichever sound device you set as Hardware Input 2 in Voicemeeter. You need to copy **EXACTLY** what it shows in the dropdown box. Write or type down exactly what is in here.
+1. Under the *Select Audio Device* dropdown box, look for your desired output device. You need to copy **EXACTLY** what it shows in the dropdown box. Write or type down exactly what is in here.
 
 ### Naming the sounds
 
