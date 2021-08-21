@@ -33,7 +33,7 @@ client.on('message', (channel, userState, message, self) => {
   }
   const customRewardId = userState['custom-reward-id']
   // Uncomment the below if you need to get a rewardId to use in config
-  // console.info(`Reward ID ${customRewardId} triggered.`)
+  console.info(`Reward ID ${customRewardId} triggered.`)
 
   const rewardKeys = Object.keys(config.REWARDS) as Reward[]
   const reward: Reward | undefined = rewardKeys.find(
