@@ -58,7 +58,7 @@ on what you should be updating.
 
 ### Naming the sounds
 
-Your file names should generally follow this structure: 
+Your file names should follow this structure: 
 
 `file name [category1, category2].mp3.`  
 
