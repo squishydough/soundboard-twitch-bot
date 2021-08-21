@@ -1,7 +1,6 @@
 import tmi from 'tmi.js'
 import childProcess from 'child_process'
-import config from './config'
-import { FreeSound, Reward } from './types'
+import config, { FreeSound, Reward } from './config'
 import fs from 'fs'
 
 const soundList = buildSoundList()
@@ -17,7 +16,7 @@ const client = new tmi.Client({
 client.connect()
 
 client.on('message', (channel, userState, message, self) => {
-  // Check FREE_SOUNDS first to see if the command is recognized
+  // Check config.FREE_SOUNDS first to see if the command is recognized
   const freeSoundKeys = Object.keys(config.FREE_SOUNDS) as FreeSound[]
   const freeSoundKey: FreeSound | undefined = freeSoundKeys.find(
     (soundKey) => message.indexOf(soundKey) > -1
@@ -33,7 +32,9 @@ client.on('message', (channel, userState, message, self) => {
     return
   }
   const customRewardId = userState['custom-reward-id']
+  // Uncomment the below if you need to get a rewardId to use in config
   // console.info(`Reward ID ${customRewardId} triggered.`)
+
   const rewardKeys = Object.keys(config.REWARDS) as Reward[]
   const reward: Reward | undefined = rewardKeys.find(
     (k) => config.REWARDS[k] === customRewardId
@@ -64,6 +65,9 @@ function playSound(soundPath: string) {
   ])
 }
 
+/**
+ * Loop through sounds directory and find all sounds with categories that match the keys in config.REWARDS
+ */
 function buildSoundList() {
   console.info('Building sound list.')
   const rewardCategories = Object.keys(config.REWARDS) as Reward[]
