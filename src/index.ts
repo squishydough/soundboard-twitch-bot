@@ -1,29 +1,119 @@
 import tmi from 'tmi.js'
-import childProcess from 'child_process'
-import config, { FreeSound, Reward } from './config'
-import fs from 'fs'
+import { SoundLibrary } from './SoundLibrary'
 
-const soundList = buildSoundList()
+/**
+ * Initialize the sound library with your custom configuration here.
+ *
+ * This was designed to work with my soundboard library:
+ * https://github.com/joshwaiam/soundboard
+ *
+ * Sounds are in a folder with the option to specify categories between brackets.
+ * So for example, a file could be named:
+ *    /some sound file [cat1, cat2].mp3
+ * And the sound file would be added to the categories: cat1 and cat2.
+ *
+ * This script relies on sounds being formatted in the same way.
+ */
 
+/******************************* START CONFIGURATION ***************************************/
+
+const soundLibrary = new SoundLibrary({
+  // Path to your VLC executable
+  vlcPath: 'C:\\Program Files\\VideoLAN\\VLC\\vlc.exe',
+  /**
+   * The audio device to play the sound on
+   *
+   * If you are unsure of how to determine this, please
+   * reference https://joshpayette.dev/posts/introducing-my-ultimate-soundboard,
+   * in the section "Determine your vlc_audio_out" value
+   */
+  vlcAudioOut: 'CABLE Input (VB-Audio Virtual C ($1,$64)',
+  // Path to your folder with sound effects
+  soundsDir: 'C:\\Coding\\projects\\soundboard\\sounds\\',
+  // Name of your Twitch channel
+  twitchChannel: 'squishydough',
+  /**
+   * These correspond to Twitch channel point rewards.
+   *    The key is the sound category you want to play a random sound from.
+   *    The value is the Twitch channel reward id.
+   *
+   * Setup
+   *    1.  Set up a reward in Twitch with any settings or name you'd like.
+   *        The reward MUST require the user to enter text - that's the only way the
+   *        message will have a channel id.
+   *    2.  Once the reward is set up, start the bot and redeem the reward.
+   *        The console will log the channel reward ID, which you can use below.
+   */
+  twitchChannelPointRewards: {
+    insult: '8288e094-4fdc-4bf5-a177-178fa27ca137',
+    cheer: '1bc17c01-802b-488b-8d26-da42ad23fc5e',
+    smau: '4c288387-66a0-4b26-b5f4-845c2084d1de',
+  },
+  /**
+   * These correspond to custom commands set up in StreamElements.
+   * Each command can point to a single sound file or an array of sound files.
+   * In the event you have an array of sound files, a random sound will be chosen.
+   * In the event of an empty string, you can load sounds by category just below this config.
+   *
+   * Single file example:
+   * !command = 'sound.mp3'
+   *
+   * Multiple file example:
+   * !command = ['sound1.mp3', 'sound2.mp3']
+   *
+   */
+  streamElementsRewards: {
+    '!angel': `yeah that's what you get [i killed].mp3`,
+    '!cheese': 'please please please please please stop [beg, stop].mp3',
+    '!sheesh': 'sheeeeeesh [good wow, bad wow, moon].mp3',
+    '!yerr': 'yerrrr [moon, random, yes, encourage].mp3',
+    '!cringe': `that's so cringe [moon, sad].mp3`,
+    '!potg': 'potg potg potg [moon, cheer, boast, taunt].mp3',
+    '!moon': `i'm not going to be a fake and a fraud [moon, bravery].mp3`,
+    /**
+     * Initialize the following below the config, since the object must be constructed
+     * before we can call the method to pick a random sound for these categories.
+     */
+    '!hello': '',
+    '!bye': '',
+  },
+})
+
+/**
+ * For each streamElementsRewards that is set to an empty string,
+ * you must populate sounds from a specific sound category.
+ * If your command has aliases, add those to the optional `aliases` prop.
+ */
+soundLibrary.addSoundsFromCategory({
+  command: '!hello',
+  category: 'hello',
+  aliases: ['!hi'],
+})
+soundLibrary.addSoundsFromCategory({
+  command: '!bye',
+  category: 'bye',
+  aliases: ['!goodbye'],
+})
+
+/******************************* END CONFIGURATION ***************************************/
+
+// Create the Twitch client
 const client = new tmi.Client({
   connection: {
     secure: true,
     reconnect: true,
   },
-  channels: [config.CHANNEL_NAME],
+  channels: [soundLibrary.twitchChannel],
 })
-
 client.connect()
+console.info('Listening to Twitch chat...')
 
-client.on('message', (channel, userState, message, self) => {
-  // Check config.FREE_SOUNDS first to see if the command is recognized
-  const freeSoundKeys = Object.keys(config.FREE_SOUNDS) as FreeSound[]
-  const freeSoundKey: FreeSound | undefined = freeSoundKeys.find(
-    (soundKey) => message.indexOf(soundKey) > -1
-  )
-
-  if (freeSoundKey !== undefined) {
-    playSound(config.FREE_SOUNDS[freeSoundKey])
+// Listen to messages in order to trigger sounds
+client.on('message', (_channel, userState, message, _self) => {
+  // Check if the message is one of the StreamElements free command sounds
+  const streamElementsRewardPlayed =
+    soundLibrary.playStreamElementsReward(message)
+  if (streamElementsRewardPlayed) {
     return
   }
 
@@ -32,70 +122,8 @@ client.on('message', (channel, userState, message, self) => {
     return
   }
   const customRewardId = userState['custom-reward-id']
-  // Uncomment the below if you need to get a rewardId to use in config
-  console.info(`Reward ID ${customRewardId} triggered.`)
+  console.info(`Channel reward id: ${customRewardId}`)
 
-  const rewardKeys = Object.keys(config.REWARDS) as Reward[]
-  const reward: Reward | undefined = rewardKeys.find(
-    (k) => config.REWARDS[k] === customRewardId
-  )
-  // if no reward found, exit
-  if (!reward) {
-    return
-  }
-  const categorySounds = soundList[reward]
-  // Exit if no sounds found for this category
-  if (!categorySounds) {
-    return
-  }
-  const randomSoundIndex = randomNumber(0, categorySounds.length - 1)
-  playSound(categorySounds[randomSoundIndex])
+  // Check if the message is one of the Twitch channel points reward sounds
+  soundLibrary.playTwitchChannelPointsReward(customRewardId)
 })
-
-console.info('Listening to Twitch chat...')
-
-function playSound(soundPath: string) {
-  childProcess.spawn(config.VLC_PATH, [
-    `--aout=waveout`,
-    `--waveout-audio-device=${config.VLC_AUDIO_OUT}`,
-    `--play-and-exit`,
-    `--qt-start-minimized`,
-    `--qt-system-tray`,
-    `${config.SOUNDS_DIR}\\${soundPath}`,
-  ])
-}
-
-/**
- * Loop through sounds directory and find all sounds with categories that match the keys in config.REWARDS
- */
-function buildSoundList() {
-  console.info('Building sound list.')
-  const rewardCategories = Object.keys(config.REWARDS) as Reward[]
-  const soundList: Partial<Record<Reward, string[]>> = {}
-
-  // Loop through sound folder and find all files that match the categories in config.REWARDS
-  fs.readdirSync(config.SOUNDS_DIR).forEach((file) => {
-    // Grab the portion of the filename after the [ to search categories
-    const fileSplit = file.split('[')
-    if (!fileSplit[1]) {
-      return
-    }
-    const fileCategories = fileSplit[1]
-    // Go through each key in the config.REWARDS object and see if this sound qualifies
-    rewardCategories.forEach((rewardCategory) => {
-      if (fileCategories.indexOf(rewardCategory) > -1) {
-        // Add the sound to the list
-        soundList[rewardCategory] = soundList[rewardCategory] || []
-        soundList[rewardCategory]?.push(file)
-      }
-    })
-  })
-
-  // Write to the sounds.json output file
-  console.info('Finished building sound list.')
-  return soundList
-}
-
-function randomNumber(min: number, max: number) {
-  return Math.floor(Math.random() * (max - min + 1)) + min
-}
