@@ -118,7 +118,7 @@ Once you have tested the bot and everything looks good, you can build the bot an
 
 `npm run build`
 
-This will create a `./dist` folder with the compiled bot.  You can then run the bot by running the following command:
+This will create a `./dist` folder with the compiled bot.  You can then run the bot via your terminal or command prompt by navigating to the folder where you extracted the repository, then running the following command:
 
 `node dist/index.js`
 
