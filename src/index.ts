@@ -11,7 +11,7 @@ const client = new tmi.Client({
     secure: true,
     reconnect: true,
   },
-  channels: ['squishydough'],
+  channels: [config.CHANNEL_NAME],
 })
 
 client.connect()

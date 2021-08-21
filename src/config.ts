@@ -3,6 +3,7 @@ import { FreeSound, Reward } from './types'
 const VLC_PATH = 'C:\\Program Files\\VideoLAN\\VLC\\vlc.exe'
 const VLC_AUDIO_OUT = 'CABLE Input (VB-Audio Virtual C ($1,$64)'
 const SOUNDS_DIR = 'C:\\Coding\\projects\\soundboard\\sounds\\'
+const CHANNEL_NAME = 'squishydough'
 const REWARDS: Record<Reward, string> = {
   insult: '8288e094-4fdc-4bf5-a177-178fa27ca137',
   cheer: '1bc17c01-802b-488b-8d26-da42ad23fc5e',
@@ -15,4 +16,11 @@ const FREE_SOUNDS: Record<FreeSound, string> = {
   '!yerr': 'yerrrr [moon, random, yes, encourage].mp3',
 }
 
-export default { VLC_PATH, VLC_AUDIO_OUT, SOUNDS_DIR, REWARDS, FREE_SOUNDS }
+export default {
+  VLC_PATH,
+  VLC_AUDIO_OUT,
+  SOUNDS_DIR,
+  REWARDS,
+  FREE_SOUNDS,
+  CHANNEL_NAME,
+}
