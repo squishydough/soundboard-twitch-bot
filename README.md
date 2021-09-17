@@ -112,6 +112,8 @@ In your terminal or command prompt, navigate to the folder where you extracted t
 
 `npm run dev`
 
+You can now go to your channel and start redeemeing rewards to test and ensure the bot responds accordingly!
+
 ## Building and Using the Bot
 
 Once you have tested the bot and everything looks good, you can build the bot and run it.  In your terminal or command prompt, navigate to the folder where you extracted the repository.  Then run the following command:
