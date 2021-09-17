@@ -2,7 +2,7 @@
 
 ## What is this?
 
-This is a Twitch bot that is a companion to [my soundboard project](https://github.com/joshwaiam/soundboard#naming-the-sounds).
+This is a Twitch bot that is a companion to [my soundboard project](https://github.com/joshwaiam/soundboard).
 You do not need to use the soundboard project to use this bot.  However, this bot works by default
 with the file name conventions established in that project.
 
