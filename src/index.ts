@@ -44,7 +44,7 @@ const soundLibrary = new SoundLibrary({
    *    2.  Once the reward is set up, start the bot and redeem the reward.
    *        The console will log the channel reward ID, which you can use below.
    */
-  twitchChannelPointRewards: {
+  twitchChannelPointsRewards: {
     insult: '8288e094-4fdc-4bf5-a177-178fa27ca137',
     cheer: '1bc17c01-802b-488b-8d26-da42ad23fc5e',
     smau: '4c288387-66a0-4b26-b5f4-845c2084d1de',

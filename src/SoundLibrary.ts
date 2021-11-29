@@ -8,7 +8,7 @@ interface ISoundLibrary {
   soundsDir: string
   twitchChannel: string
   streamElementsRewards: Record<string, string | string[]>
-  twitchChannelPointRewards: Record<string, string>
+  twitchChannelPointsRewards: Record<string, string>
   allSounds: Record<string, string[]>
 }
 
@@ -19,7 +19,7 @@ export class SoundLibrary {
   private allSounds: ISoundLibrary['allSounds'] = {}
   public twitchChannel: ISoundLibrary['twitchChannel'] = ''
   public streamElementsRewards: ISoundLibrary['streamElementsRewards'] = {}
-  private twitchChannelPointRewards: ISoundLibrary['twitchChannelPointRewards'] =
+  private twitchChannelPointsRewards: ISoundLibrary['twitchChannelPointsRewards'] =
     {}
 
   constructor({
@@ -28,26 +28,26 @@ export class SoundLibrary {
     soundsDir,
     twitchChannel,
     streamElementsRewards,
-    twitchChannelPointRewards,
+    twitchChannelPointsRewards,
   }: Omit<ISoundLibrary, 'allSounds'>) {
     this.vlcPath = vlcPath
     this.vlcAudioOut = vlcAudioOut
     this.soundsDir = soundsDir
     this.twitchChannel = twitchChannel
     this.streamElementsRewards = streamElementsRewards
-    this.twitchChannelPointRewards = twitchChannelPointRewards
+    this.twitchChannelPointsRewards = twitchChannelPointsRewards
     this.buildSoundLibrary()
   }
 
   /**
    * Loop through sounds directory and find all sounds with categories that match the
    * keys in:
-   *    1. this.twitchChannelPointRewards;
+   *    1. this.twitchChannelPointsRewards;
    *    2. this.streamElementsRewards (where the value is '')
    */
   private buildSoundLibrary() {
     console.info('Building sound list.')
-    const rewardCategories = Object.keys(this.twitchChannelPointRewards)
+    const rewardCategories = Object.keys(this.twitchChannelPointsRewards)
     const freeSoundCategories: string[] = Object.keys(
       this.streamElementsRewards
     ).map((freeSoundCategory) => {
@@ -58,7 +58,7 @@ export class SoundLibrary {
     })
     const sounds: ISoundLibrary['allSounds'] = {}
 
-    // Loop through sound folder and find all files that match the categories in this.twitchChannelPointRewards
+    // Loop through sound folder and find all files that match the categories in this.twitchChannelPointsRewards
     fs.readdirSync(this.soundsDir).forEach((file) => {
       // Grab the portion of the filename after the [ to search categories
       const fileSplit = file.split('[')
@@ -66,7 +66,7 @@ export class SoundLibrary {
         return
       }
       const fileCategories = fileSplit[1]
-      // Go through each key in the this.twitchChannelPointRewards object and see if
+      // Go through each key in the this.twitchChannelPointsRewards object and see if
       // this sound qualifies
       rewardCategories.forEach((rewardCategory) => {
         if (fileCategories.indexOf(rewardCategory) > -1) {
@@ -142,13 +142,13 @@ export class SoundLibrary {
   }
 
   /**
-   * Check this.twitchChannelPointRewards to see if a matching command
+   * Check this.twitchChannelPointsRewards to see if a matching command
    * is found. If so, play a random song from the reward category.
    */
   public playTwitchChannelPointsReward(rewardId: string) {
-    const rewardCategories = Object.keys(this.twitchChannelPointRewards)
+    const rewardCategories = Object.keys(this.twitchChannelPointsRewards)
     const matchingRewardCategory = rewardCategories.find(
-      (k) => this.twitchChannelPointRewards[k] === rewardId
+      (k) => this.twitchChannelPointsRewards[k] === rewardId
     )
     // if no reward found, exit
     if (!matchingRewardCategory) {

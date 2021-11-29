@@ -100,7 +100,7 @@ soundLibrary.addSoundsFromCategory({
 the bot is able to determine if a Twitch Channel Point Reward was redeemed.
 1. With the bot running (see the Testing the Bot section below), redeem the reward in your chat.  Look for 
 **Channel reward id:** in your terminal or command prompt, and copy the ID.
-1. In the configuration, update `twitchChannelPointRewards` with a sound category and the ID.
+1. In the configuration, update `twitchChannelPointsRewards` with a sound category and the ID.
 
 Example, playing a random sound from the `insult` category:
 
