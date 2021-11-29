@@ -2,7 +2,7 @@
 
 ## What is this?
 
-This is a Twitch bot that is a companion to [my soundboard project](https://github.com/joshwaiam/soundboard#naming-the-sounds).
+This is a Twitch bot that is a companion to [my soundboard project](https://github.com/joshwaiam/soundboard).
 You do not need to use the soundboard project to use this bot.  However, this bot works by default
 with the file name conventions established in that project.
 
@@ -111,6 +111,8 @@ Example, playing a random sound from the `insult` category:
 In your terminal or command prompt, navigate to the folder where you extracted the repository.  Then run the following command:
 
 `npm run dev`
+
+You can now go to your channel and start redeemeing rewards to test and ensure the bot responds accordingly!
 
 ## Building and Using the Bot
 
