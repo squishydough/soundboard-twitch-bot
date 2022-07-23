@@ -1,4 +1,5 @@
 import tmi from 'tmi.js'
+
 import { SoundLibrary } from './SoundLibrary'
 
 /**
@@ -27,9 +28,9 @@ const soundLibrary = new SoundLibrary({
    * reference https://joshpayette.dev/posts/introducing-my-ultimate-soundboard,
    * in the section "Determine your vlc_audio_out" value
    */
-  vlcAudioOut: 'CABLE Input (VB-Audio Virtual C ($1,$64)',
+  vlcAudioOut: 'Speakers (VB-Audio Virtual Cabl ($1,$64)',
   // Path to your folder with sound effects
-  soundsDir: 'C:\\Coding\\projects\\soundboard\\sounds\\',
+  soundsDir: 'C:\\Coding\\soundboard-ahk\\sounds\\',
   // Name of your Twitch channel
   twitchChannel: 'squishydough',
   /**
