@@ -74,6 +74,7 @@ const soundLibrary = new SoundLibrary({
     '!cringe': `that's so cringe [moon, sad].mp3`,
     '!potg': 'potg potg potg [moon, cheer, boast, taunt].mp3',
     '!moon': `i'm not going to be a fake and a fraud [moon, bravery].mp3`,
+    '!yammy': `yammmyyy [omar].mp3`,
     /**
      * Initialize the following below the config, since the object must be constructed
      * before we can call the method to pick a random sound for these categories.
@@ -126,7 +127,9 @@ client.on('message', (_channel, userState, message, _self) => {
     return
   }
   const customRewardId = userState['custom-reward-id']
-  console.info(`Channel reward id: ${customRewardId}`)
+  console.info(
+    `User ${userState.username} redeemed channel reward id: ${customRewardId}`
+  )
 
   // Check if the message is one of the Twitch channel points reward sounds
   soundLibrary.playTwitchChannelPointsReward(customRewardId)
