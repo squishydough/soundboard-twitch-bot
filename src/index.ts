@@ -28,9 +28,9 @@ const soundLibrary = new SoundLibrary({
    * reference https://joshpayette.dev/posts/introducing-my-ultimate-soundboard,
    * in the section "Determine your vlc_audio_out" value
    */
-  vlcAudioOut: 'Speakers (VB-Audio Virtual Cabl ($1,$64)',
+  vlcAudioOut: 'Soundboard (VB-Audio Virtual Ca ($1,$64)',
   // Path to your folder with sound effects
-  soundsDir: 'C:\\Coding\\soundboard-ahk\\sounds\\',
+  soundsDir: 'D:\\Coding\\soundboard-ahk\\sounds\\',
   // Name of your Twitch channel
   twitchChannel: 'squishydough',
   /**
@@ -75,6 +75,7 @@ const soundLibrary = new SoundLibrary({
     '!potg': 'potg potg potg [moon, cheer, boast, taunt].mp3',
     '!moon': `i'm not going to be a fake and a fraud [moon, bravery].mp3`,
     '!yammy': `yammmyyy [omar].mp3`,
+    '!werebear': `carebear countdown.mp3`,
     /**
      * Initialize the following below the config, since the object must be constructed
      * before we can call the method to pick a random sound for these categories.

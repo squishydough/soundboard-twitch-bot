@@ -3,12 +3,12 @@
 ## What is this?
 
 This is a Twitch bot that is a companion to [my soundboard project](https://github.com/joshwaiam/soundboard).
-You do not need to use the soundboard project to use this bot.  However, this bot works by default
+You do not need to use the soundboard project to use this bot. However, this bot works by default
 with the file name conventions established in that project.
 
 ## Requirements
 
-In order to run this script, you must have [NodeJS](https://nodejs.org/en/download/) installed.  Additionally, this script
+In order to run this script, you must have [NodeJS](https://nodejs.org/en/download/) installed. Additionally, this script
 utilizes [VLC Media Player](https://www.videolan.org/vlc/download-windows.html).
 
 ## How it works
@@ -19,20 +19,20 @@ Then it will play a sound or random sound from a specified `/sounds` folder thro
 ## Setting up audio cables
 
 This is designed to work with virtual audio cables, where you can route your mic and soundboard through a single device
-which can then be used on your stream.  Your setup doesn't have to be the exact same, as this script will
-allow you to specify a device to play the sound on.  However, if you need more info on setting up virtual audio cables and a
+which can then be used on your stream. Your setup doesn't have to be the exact same, as this script will
+allow you to specify a device to play the sound on. However, if you need more info on setting up virtual audio cables and a
 mixer, [this article I wrote for my soundboard](https://joshpayette.dev/posts/introducing-my-ultimate-soundboard) is a good place to start.
 
 ## Setting up the bot
 
 ### Download this repository
 
-If you are familiar with Github, you can simply clone this repository.  Otherwise, you can [download this zip file](https://github.com/joshwaiam/soundboard-twitch-bot/archive/refs/heads/main.zip) and 
+If you are familiar with Github, you can simply clone this repository. Otherwise, you can [download this zip file](https://github.com/joshwaiam/soundboard-twitch-bot/archive/refs/heads/main.zip) and
 extract to a folder on your computer.
 
 ### Install dependencies
 
-Open up a terminal or command prompt and navigate to the folder where you extracted the repository.  Then run the following command:
+Open up a terminal or command prompt and navigate to the folder where you extracted the repository. Then run the following command:
 
 `npm install`
 
@@ -48,27 +48,27 @@ on what you should be updating.
 
 1. Go to **Tools -> Preferences**.
 
-1. Click on the **Audio** tab.  **Click this tab first or else you won't get a list of sound devices!**
+1. Click on the **Audio** tab. **Click this tab first or else you won't get a list of sound devices!**
 
-1. Under *Show settings* section at the bottom left of the window, choose **All**.
+1. Under _Show settings_ section at the bottom left of the window, choose **All**.
 
-1. Under the *Audio* category on the left, expand **Output Modules** and select **WaveOut**.
+1. Under the _Audio_ category on the left, expand **Output Modules** and select **WaveOut**.
 
-1. Under the *Select Audio Device* dropdown box, look for your desired output device. You need to copy **EXACTLY** what it shows in the dropdown box. Write or type down exactly what is in here.
+1. Under the _Select Audio Device_ dropdown box, look for your desired output device. You need to copy **EXACTLY** what it shows in the dropdown box. Write or type down exactly what is in here.
 
 ### Naming the sounds
 
-Your file names should follow this structure: 
+Your file names should follow this structure:
 
-`file name [category1, category2].mp3.`  
+`file name [category1, category2].mp3.`
 
 The script will check each file name and take the comma-separated category names from with the `[]`
-square brackets.  You can add as many categories as you want, allowing this file to be included
+square brackets. You can add as many categories as you want, allowing this file to be included
 when you tell the bot to pick a random sound from a category.
 
 ### StreamElements Rewards
 
-After adding a chat command to StreamElements, you can incorporate a behavior into the bot by 
+After adding a chat command to StreamElements, you can incorporate a behavior into the bot by
 adding the command to the `streamElementsRewards` option of the configuration.
 
 Example:
@@ -96,10 +96,10 @@ soundLibrary.addSoundsFromCategory({
 
 ### Twitch Channel Point Rewards
 
-1. Add the Twitch Channel Point Reward, being sure to select **User Response Required.**  This is the only way 
-the bot is able to determine if a Twitch Channel Point Reward was redeemed.
-1. With the bot running (see the Testing the Bot section below), redeem the reward in your chat.  Look for 
-**Channel reward id:** in your terminal or command prompt, and copy the ID.
+1. Add the Twitch Channel Point Reward, being sure to select **User Response Required.** This is the only way
+   the bot is able to determine if a Twitch Channel Point Reward was redeemed.
+1. With the bot running (see the Testing the Bot section below), redeem the reward in your chat. Look for
+   **Channel reward id:** in your terminal or command prompt, and copy the ID.
 1. In the configuration, update `twitchChannelPointsRewards` with a sound category and the ID.
 
 Example, playing a random sound from the `insult` category:
@@ -108,7 +108,7 @@ Example, playing a random sound from the `insult` category:
 
 ## Testing the Bot
 
-In your terminal or command prompt, navigate to the folder where you extracted the repository.  Then run the following command:
+In your terminal or command prompt, navigate to the folder where you extracted the repository. Then run the following command:
 
 `npm run dev`
 
@@ -116,19 +116,19 @@ You can now go to your channel and start redeemeing rewards to test and ensure t
 
 ## Building and Using the Bot
 
-Once you have tested the bot and everything looks good, you can build the bot and run it.  In your terminal or command prompt, navigate to the folder where you extracted the repository.  Then run the following command:
+Once you have tested the bot and everything looks good, you can build the bot and run it. In your terminal or command prompt, navigate to the folder where you extracted the repository. Then run the following command:
 
 `npm run build`
 
-This will create a `./dist` folder with the compiled bot.  You can then run the bot via your terminal or command prompt by navigating to the folder where you extracted the repository, then running the following command:
+This will create a `./dist` folder with the compiled bot. You can then run the bot via your terminal or command prompt by navigating to the folder where you extracted the repository, then running the following command:
 
 `node dist/index.js`
 
 ### Quickly Starting the Bot
 
-Inlcuded in the root of this project is a file called `start.bat`.  Update the script to point to
-your compiled bot.  Then you can run this bat file, or create a shortcut to it on your desktop, to quickly start the bot.
+Inlcuded in the root of this project is a file called `start.bat`. Update the script to point to
+your compiled bot. Then you can run this bat file, or create a shortcut to it on your desktop, to quickly start the bot.
 
 Example `start.bat`:
 
-`START cmd /k "cd C:\Coding\projects\soundboard-twitch-bot\dist & node index.js"`
+`START cmd /k "cd D:\Coding\projects\soundboard-twitch-bot\dist & node index.js"`

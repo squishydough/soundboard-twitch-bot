@@ -1,1 +1,1 @@
-START cmd /k "cd C:\Coding\soundboard-twitch-bot\dist & node index.js" 
+START cmd /k "cd D:\Coding\soundboard-twitch-bot\dist & node index.js" 
